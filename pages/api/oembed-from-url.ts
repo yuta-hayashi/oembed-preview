@@ -11,12 +11,16 @@ export default async function handler(req: NextRequest) {
     return new Response('Not Found', { status: 404 })
   }
 
-  const root = parse(html)
-  const oembedUrl = root
+  const oembedUrl = parse(html)
     .querySelector('head link[type="application/json+oembed"]')
     ?.getAttribute('href')
   if (!oembedUrl) {
     return new Response('Not Found', { status: 404 })
   }
-  return new Response(JSON.stringify({ oembedUrl }))
+
+  const oembedResponse = await fetch(oembedUrl)
+    .then((res) => res.json())
+    .catch((error) => console.error(error.message))
+
+  return new Response(JSON.stringify({ oembedUrl, oembedResponse }))
 }
