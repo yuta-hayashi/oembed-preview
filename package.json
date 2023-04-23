@@ -9,16 +9,36 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.5.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@types/node": "18.15.11",
+    "@types/prismjs": "^1.26.0",
     "@types/react": "18.0.35",
     "@types/react-dom": "18.0.11",
+    "babel-plugin-prismjs": "^2.1.0",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
+    "framer-motion": "^10.12.4",
     "next": "13.3.0",
     "node-html-parser": "^6.1.5",
     "oembed-providers": "^1.0.20230119",
+    "prismjs": "^1.29.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.0.4"
-  }
+  },
+  "plugins": [
+    [
+      "prismjs",
+      {
+        "languages": [
+          "javascript",
+          "json"
+        ],
+        "theme": "tomorrow",
+        "css": true
+      }
+    ]
+  ]
 }

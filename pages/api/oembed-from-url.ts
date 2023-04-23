@@ -12,7 +12,7 @@ export default async function handler(req: NextRequest) {
   const provider = findProvider(new URL(url).hostname)
   let oembedUrl: string | undefined = undefined
   if (provider) {
-    oembedUrl = `${provider.endpoints[0].url}?url=${url}&format=json`
+    oembedUrl = `${provider.endpoints[0].url}?url=${url}`
   } else {
     oembedUrl = await findHtml(url)
   }
@@ -20,14 +20,19 @@ export default async function handler(req: NextRequest) {
     return new Response('Not Found', { status: 404 })
   }
 
-  const oembedResponse = await fetch(oembedUrl)
+  const oembedUrlWithParams = new URL(oembedUrl)
+  oembedUrlWithParams.searchParams.set('format', 'json')
+  oembedUrlWithParams.searchParams.set('maxwidth', '500')
+  oembedUrlWithParams.searchParams.set('maxheight', '500')
+
+  const oembedResponse = await fetch(oembedUrlWithParams)
     .then((res) => res.json())
     .catch((error) => console.error(error.message))
   if (!oembedResponse) {
     return new Response('Not Found', { status: 404 })
   }
 
-  return new Response(JSON.stringify({ oembedUrl, oembedResponse }))
+  return new Response(JSON.stringify({ oembedUrlWithParams, oembedResponse }))
 }
 
 const findProvider = (url: string) => {

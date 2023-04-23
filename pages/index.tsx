@@ -1,9 +1,10 @@
 import Head from 'next/head'
-import { useState } from 'react'
-import { Inter } from 'next/font/google'
+import { useState, useEffect } from 'react'
+import { Button, Container, Flex, Heading, Input, Text } from '@chakra-ui/react'
+import Prism from 'prismjs'
+import 'prismjs/components/prism-json'
+import 'prismjs/themes/prism-tomorrow.css'
 import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const [oembedResponse, setOembedResponse] = useState<string | null>(null)
@@ -25,6 +26,9 @@ export default function Home() {
       setOembedHtml(null)
     }
   }
+  useEffect(() => {
+    Prism.highlightAll()
+  }, [oembedResponse])
 
   return (
     <>
@@ -37,23 +41,40 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h1>Oembed Preview</h1>
-        <p>
+      <Container maxW="1200px">
+        <Heading>Oembed Preview</Heading>
+        <Text fontSize="lg">
           Enter the URL of a website and if the site is Oembed compliant, it
           will show it!
-        </p>
+        </Text>
         <form onSubmit={handleSubmit}>
-          <input type="url" name="target url" placeholder="Target URL" />
-          <button type="submit">Get!</button>
+          <Flex>
+            <Input
+              type="url"
+              name="target url"
+              placeholder="Target URL"
+              required
+              mr={2}
+            />
+            <Button type="submit">Get!</Button>
+          </Flex>
         </form>
-        <div>
-          <code>{JSON.stringify(oembedResponse)}</code>
-          {oembedHtml && (
-            <iframe srcDoc={oembedHtml} width="100%" height="500px"></iframe>
-          )}
-        </div>
-      </main>
+
+        <Flex flexWrap="wrap">
+          <Container maxW={{ base: '100%', xl: '550px' }}>
+            <pre>
+              <code className="language-json">
+                {JSON.stringify(oembedResponse, null, 2)}
+              </code>
+            </pre>
+          </Container>
+          <Container maxW={{ base: '600' }} p="0">
+            {oembedHtml && (
+              <iframe srcDoc={oembedHtml} width="510px" height="510px"></iframe>
+            )}
+          </Container>
+        </Flex>
+      </Container>
     </>
   )
 }
