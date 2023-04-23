@@ -16,6 +16,7 @@
     "eslint-config-next": "13.3.0",
     "next": "13.3.0",
     "node-html-parser": "^6.1.5",
+    "oembed-providers": "^1.0.20230119",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.0.4"

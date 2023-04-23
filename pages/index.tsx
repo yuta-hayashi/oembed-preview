@@ -6,18 +6,24 @@ import styles from '@/styles/Home.module.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [oembedResponse, setOembedResponse] = useState('')
+  const [oembedResponse, setOembedResponse] = useState<string | null>(null)
   const [oembedHtml, setOembedHtml] = useState<string | null>(null)
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     const url = e.target[0].value
     console.log(url)
     const res = await fetch(`/api/oembed-from-url?url=${url}`)
-      .then((res) => res.json())
+      .then((res) => {
+        return res.json()
+      })
       .catch((err) => console.log(err))
-    console.log(res)
-    setOembedResponse(res.oembedResponse)
-    setOembedHtml(res.oembedResponse.html)
+    if (res.oembedResponse && res.oembedResponse.html) {
+      setOembedResponse(res.oembedResponse)
+      setOembedHtml(res.oembedResponse.html)
+    } else {
+      setOembedResponse(null)
+      setOembedHtml(null)
+    }
   }
 
   return (

@@ -1618,6 +1618,11 @@ object.values@^1.1.6:
     define-properties "^1.1.4"
     es-abstract "^1.20.4"
 
+oembed-providers@^1.0.20230119:
+  version "1.0.20230119"
+  resolved "https://registry.yarnpkg.com/oembed-providers/-/oembed-providers-1.0.20230119.tgz#14f1a30f5d25a8a53994b102b14fd96965f00594"
+  integrity sha512-U8r5nuYyuhdCp+QYjINCKRsQB2fkMVUUiG3ZGodYXWnPduVT8cRQ9Gs7lRey1F5AGIKsL22HJ7/pCnGmJsd6Gw==
+
 once@^1.3.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/once/-/once-1.4.0.tgz#583b1aa775961d4b113ac17d9c50baef9dd76bd1"
