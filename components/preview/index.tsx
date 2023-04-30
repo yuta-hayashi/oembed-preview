@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Button, Container, Flex, Heading, Input, Text } from '@chakra-ui/react'
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Input,
+  Text,
+  Link,
+} from '@chakra-ui/react'
 import Prism from 'prismjs'
 import 'prismjs/components/prism-json'
 import 'prismjs/themes/prism-tomorrow.css'
@@ -55,13 +63,20 @@ export default function Preview() {
   return (
     <>
       <Container maxW="1200px">
-        <Heading>Oembed Preview</Heading>
+        <Heading my="8">Oembed Preview</Heading>
         <Text fontSize="lg">
           Enter the URL of a website and if the site is Oembed compliant, it
           will show it!
         </Text>
+        <Text>This site supports oEmbed only for rich and video Type.</Text>
+        <Text>
+          Here is the {''}
+          <Link href="https://oembed.com/" isExternal color="blue.500">
+            oEmbed documents
+          </Link>
+        </Text>
         <form onSubmit={handleSubmit}>
-          <Flex>
+          <Flex my="4">
             <Input
               type="url"
               defaultValue={targetUrl || ''}
