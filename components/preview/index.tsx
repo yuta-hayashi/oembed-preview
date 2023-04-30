@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { Button, Container, Flex, Heading, Input, Text } from '@chakra-ui/react'
 import Prism from 'prismjs'
 import 'prismjs/components/prism-json'
 import 'prismjs/themes/prism-tomorrow.css'
 
 export default function Preview() {
+  const router = useRouter()
+  const [targetUrl, setTargetUrl] = useState<string | null>(null)
   const [oembedResponse, setOembedResponse] = useState<string | null>(null)
   const [oembedHtml, setOembedHtml] = useState<string | null>(null)
-  const handleSubmit = async (e: any) => {
-    e.preventDefault()
-    const url = e.target[0].value
-    const res = await fetch(`/api/oembed-from-url?url=${url}`)
+
+  const fetchOembed = async () => {
+    const res = await fetch(`/api/oembed-from-url?url=${targetUrl}`)
       .then((res) => {
         return res.json()
       })
@@ -23,9 +25,32 @@ export default function Preview() {
       setOembedHtml(null)
     }
   }
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+    const url = e.target[0].value
+    router.replace({
+      query: { url: url },
+    })
+    setTargetUrl(url)
+  }
+  useEffect(() => {
+    if (targetUrl) {
+      fetchOembed()
+    }
+  }, [targetUrl])
+
   useEffect(() => {
     Prism.highlightAll()
   }, [oembedResponse])
+
+  const { url } = router.query
+  useEffect(() => {
+    console.log(url)
+    if (url) {
+      console.log(url)
+      setTargetUrl(url as string)
+    }
+  }, [url])
 
   return (
     <>
@@ -39,6 +64,7 @@ export default function Preview() {
           <Flex>
             <Input
               type="url"
+              defaultValue={targetUrl || ''}
               name="target url"
               placeholder="Target URL"
               required
