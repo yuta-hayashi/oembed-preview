@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
+import Footer from '@/components/footer'
 
 const Preview = dynamic(() => import('../components/preview'), { ssr: false })
 
@@ -16,6 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Preview />
+      <Footer />
     </>
   )
 }
