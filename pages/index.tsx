@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import Footer from '@/components/footer'
 
+const Footer = dynamic(() => import('../components/footer'), { ssr: false })
 const Preview = dynamic(() => import('../components/preview'), { ssr: false })
 
 export default function Home() {
